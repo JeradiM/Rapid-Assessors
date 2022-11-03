@@ -1,0 +1,1 @@
+// the model for the policy types in the rapid assessor's 

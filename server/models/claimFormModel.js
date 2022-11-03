@@ -3,10 +3,13 @@ const moment = require("moment-timezone");
 const bcrypt = require("bcryptjs");
 const tzSouthAfrica = moment.tz(Date.now(), "Africa/Johannesburg"); 
 
-const userSchema = new mongoose.Schema({
-    name: {
+//  
+
+// there is a main form schema that will be saved on the database
+const formSchema = new mongoose.Schema({
+    policy_name: {
         type: String, 
-        required: [true, "Please add a name"], 
+        required: [true, "Please add a Policy Type"], 
     }, 
     email: {
         type: String, 
@@ -51,17 +54,18 @@ const userSchema = new mongoose.Schema({
 
  
 // before we save the schema 
-userSchema.pre("save", async function(next){
-    // if we're updating everything besides the password then we don't update the password 
-    if (!this.isModified("password")){
-        return next();
-    }
-    // encrypt the password prior to saving it in the db
-    const salt = await bcrypt.genSalt(10); // create a salt 
-    const hashedPassword = await bcrypt.hash(this.password, salt); // update the password property found in 'this' file
-    this.password = hashedPassword; 
-    next(); // call the next function
-});
-const User = mongoose.model("User", userSchema); 
+// userSchema.pre("save", async function(next){
+//     // if we're updating everything besides the password then we don't update the password 
+//     if (!this.isModified("password")){
+//         return next();
+//     }
+//     // encrypt the password prior to saving it in the db
+//     const salt = await bcrypt.genSalt(10); // create a salt 
+//     const hashedPassword = await bcrypt.hash(this.password, salt); // update the password property found in 'this' file
+//     this.password = hashedPassword; 
+//     next(); // call the next function
+// });
 
-module.exports = User; 
+const ClaimForm = mongoose.model("ClaimForms", formSchema); 
+
+module.exports = formSchema; 
