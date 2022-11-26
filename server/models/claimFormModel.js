@@ -3,8 +3,6 @@ const moment = require("moment-timezone");
 const bcrypt = require("bcryptjs");
 const tzSouthAfrica = moment.tz(Date.now(), "Africa/Johannesburg"); 
 
-//  
-
 // there is a main form schema that will be saved on the database
 const formSchema = new mongoose.Schema({
     policy_name: {
@@ -51,20 +49,6 @@ const formSchema = new mongoose.Schema({
         default: tzSouthAfrica, 
     }
 });
-
- 
-// before we save the schema 
-// userSchema.pre("save", async function(next){
-//     // if we're updating everything besides the password then we don't update the password 
-//     if (!this.isModified("password")){
-//         return next();
-//     }
-//     // encrypt the password prior to saving it in the db
-//     const salt = await bcrypt.genSalt(10); // create a salt 
-//     const hashedPassword = await bcrypt.hash(this.password, salt); // update the password property found in 'this' file
-//     this.password = hashedPassword; 
-//     next(); // call the next function
-// });
 
 const ClaimForm = mongoose.model("ClaimForms", formSchema); 
 
